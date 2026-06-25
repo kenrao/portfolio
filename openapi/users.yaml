@@ -1,0 +1,260 @@
+openapi: 3.0.3
+info:
+  title: Users API
+  version: 1.0.0
+  description: |
+    A sample REST API for managing users.
+
+    This is a documentation showcase that illustrates CRUD operations,
+    request and response schemas, parameters, and example payloads
+    rendered with `docusaurus-plugin-openapi-docs`.
+
+    The "Send API Request" panel is wired to
+    [JSONPlaceholder](https://jsonplaceholder.typicode.com), a public
+    mock REST API. Write operations (POST, PUT, DELETE) return realistic
+    success responses without persisting any data.
+servers:
+  - url: https://jsonplaceholder.typicode.com
+    description: Public mock REST API (JSONPlaceholder)
+tags:
+  - name: Users
+    description: Operations for listing, creating, retrieving, updating, and deleting users.
+paths:
+  /users:
+    get:
+      tags:
+        - Users
+      summary: List users
+      operationId: listUsers
+      description: Returns a paginated list of users.
+      x-codeSamples:
+        - lang: curl
+          label: cURL
+          source: |-
+            curl -L 'https://jsonplaceholder.typicode.com/users?_limit=10&_start=0' \
+              -H 'Accept: application/json'
+        - lang: PowerShell
+          label: PowerShell
+          source: |-
+            curl.exe -L "https://jsonplaceholder.typicode.com/users?_limit=10&_start=0" `
+              -H "Accept: application/json"
+      parameters:
+        - name: _limit
+          in: query
+          required: false
+          description: Maximum number of users to return.
+          schema:
+            type: integer
+            default: 10
+            example: 10
+        - name: _start
+          in: query
+          required: false
+          description: Number of users to skip for pagination.
+          schema:
+            type: integer
+            default: 0
+            example: 0
+        - name: Accept-Language
+          in: header
+          required: false
+          description: Preferred response language.
+          schema:
+            type: string
+            example: en-US
+      responses:
+        '200':
+          description: Users returned successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+              example:
+                - id: 1
+                  name: Leanne Graham
+                  username: Bret
+                  email: Sincere@april.biz
+                  phone: 1-770-736-8031 x56442
+                  website: hildegard.org
+                - id: 2
+                  name: Ervin Howell
+                  username: Antonette
+                  email: Shanna@melissa.tv
+                  phone: 010-692-6593 x09125
+                  website: anastasia.net
+        '400':
+          description: Invalid request parameters.
+        '500':
+          description: Unexpected server error.
+    post:
+      tags:
+        - Users
+      summary: Create user
+      operationId: createUser
+      description: Creates a new user and returns the created record.
+      x-codeSamples:
+        - lang: curl
+          label: cURL
+          source: |-
+            curl -L -X POST 'https://jsonplaceholder.typicode.com/users' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                "name": "Ava Thompson",
+                "username": "ava",
+                "email": "ava@example.com"
+              }'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+            example:
+              name: Ava Thompson
+              username: ava
+              email: ava@example.com
+      responses:
+        '201':
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input.
+        '409':
+          description: A user with this email already exists.
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the user.
+        schema:
+          type: integer
+          example: 1
+    get:
+      tags:
+        - Users
+      summary: Get user
+      operationId: getUser
+      description: Returns a single user by ID.
+      x-codeSamples:
+        - lang: curl
+          label: cURL
+          source: |-
+            curl -L 'https://jsonplaceholder.typicode.com/users/1' \
+              -H 'Accept: application/json'
+      responses:
+        '200':
+          description: User found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found.
+    put:
+      tags:
+        - Users
+      summary: Update user
+      operationId: updateUser
+      description: Updates an existing user and returns the updated record.
+      x-codeSamples:
+        - lang: curl
+          label: cURL
+          source: |-
+            curl -L -X PUT 'https://jsonplaceholder.typicode.com/users/1' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                "name": "Ava T. Thompson",
+                "username": "ava",
+                "email": "ava@example.com"
+              }'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: User updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input.
+        '404':
+          description: User not found.
+    delete:
+      tags:
+        - Users
+      summary: Delete user
+      operationId: deleteUser
+      description: Deletes a user by ID.
+      x-codeSamples:
+        - lang: curl
+          label: cURL
+          source: |-
+            curl -L -X DELETE 'https://jsonplaceholder.typicode.com/users/1'
+      responses:
+        '200':
+          description: User deleted successfully.
+        '404':
+          description: User not found.
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - username
+        - email
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Leanne Graham
+        username:
+          type: string
+          example: Bret
+        email:
+          type: string
+          format: email
+          example: Sincere@april.biz
+        phone:
+          type: string
+          example: 1-770-736-8031 x56442
+        website:
+          type: string
+          example: hildegard.org
+    UserInput:
+      type: object
+      required:
+        - name
+        - username
+        - email
+      properties:
+        name:
+          type: string
+          example: Ava Thompson
+        username:
+          type: string
+          example: ava
+        email:
+          type: string
+          format: email
+          example: ava@example.com
+        phone:
+          type: string
+          example: 555-867-5309
+        website:
+          type: string
+          example: ava.example.com

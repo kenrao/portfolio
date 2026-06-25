@@ -1,0 +1,24 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": ".",
+  "updated": "2026-06-17T11:53:28+05:30",
+  "id": "setup-docusaurus",
+  "duration": 29,
+  "title": "Set up Docusaurus from scratch",
+  "authors": "Kenneth Rao",
+  "summary": "Build a documentation site with Docusaurus from scratch",
+  "source": "C:\\git\\portfolio\\codelabs\\setup-docusaurus.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "documentation",
+    "docusaurus"
+  ],
+  "tags": [
+    "web"
+  ],
+  "url": "setup-docusaurus"
+}

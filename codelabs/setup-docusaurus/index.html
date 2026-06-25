@@ -1,0 +1,265 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#2563eb">
+  <meta charset="UTF-8">
+  <title>Set up Docusaurus from scratch</title>
+  <link rel="stylesheet" href="./fonts/fonts.css">
+  <link rel="stylesheet" href="./claat-public/codelab-elements.css">
+  <link rel="stylesheet" href="./claat-public/theme-portfolio.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab codelab-gaid=""
+                  codelab-ga4id=""
+                  id="setup-docusaurus"
+                  title="Set up Docusaurus from scratch"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="Overview" duration="2">
+        <p><a href="https://docusaurus.io/" target="_blank">Docusaurus</a> is a static-site generator for technical documentation. It supports Markdown, MDX, navigation, search, themes, and plugins.</p>
+<p>In this codelab, you create a Docusaurus site, add a documentation page, configure sidebar navigation, preview the site, and build it for production.</p>
+<p>By the end, you will have:</p>
+<ul>
+<li>A local Docusaurus project</li>
+<li>A custom page in <code>docs/</code></li>
+<li>A sidebar entry for the new page</li>
+<li>A production build in <code>build/</code></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Prerequisites" duration="2">
+        <p>Before you begin, make sure that you have the following tools:</p>
+<ul>
+<li>Node.js 20 or later</li>
+<li>A terminal, such as Bash, zsh, or PowerShell</li>
+<li>A code editor, such as VS Code</li>
+</ul>
+<p>To check your Node.js version:</p>
+<ul>
+<li>At the command prompt, run the following command.<pre>node --version
+</pre>
+</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Create the project" duration="5">
+        <p>Use the Docusaurus initializer to create a site from the <code>classic</code> preset.</p>
+<ol type="1">
+<li>At the command prompt, create a Docusaurus project.<pre>npx create-docusaurus@latest my-docs-site classic
+</pre>
+</li>
+<li>When prompted to choose a language, do one of the following:<ul>
+<li>To use TypeScript, choose <strong>TypeScript</strong>.</li>
+<li>To use JavaScript, choose <strong>JavaScript</strong>.</li>
+</ul>
+</li>
+<li>When prompted to choose a package manager, do one of the following:<ul>
+<li>To use the default package manager, press Enter.</li>
+<li>To use another package manager, select the package manager.</li>
+</ul>
+</li>
+<li>Change to the project directory.<pre>cd my-docs-site
+</pre>
+</li>
+<li>Install the dependencies.<pre>npm install
+</pre>
+</li>
+</ol>
+<p>The <code>classic</code> preset includes the docs plugin, blog plugin, and default theme.</p>
+<aside class="warning"><p> If <code>npx</code> fails behind a corporate proxy, configure your npm proxy settings, and then rerun the initializer.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Explore the project structure" duration="3">
+        <p>Docusaurus keeps documentation content separate from site configuration.</p>
+<p>The following folders contain the files that you edit most often:</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>Path</p>
+</td><td colspan="1" rowspan="1"><p>Purpose</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>docs/</code></p>
+</td><td colspan="1" rowspan="1"><p>Markdown and MDX documentation pages</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>src/pages/</code></p>
+</td><td colspan="1" rowspan="1"><p>Custom React pages, such as landing pages</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>static/</code></p>
+</td><td colspan="1" rowspan="1"><p>Static assets, such as images</p>
+</td></tr>
+</table>
+<p>The following files control site settings and navigation:</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>File</p>
+</td><td colspan="1" rowspan="1"><p>Purpose</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>docusaurus.config.ts</code></p>
+</td><td colspan="1" rowspan="1"><p>Site title, URL, plugins, and theme options</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>sidebars.ts</code></p>
+</td><td colspan="1" rowspan="1"><p>Docs sidebar navigation</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p><code>src/css/custom.css</code></p>
+</td><td colspan="1" rowspan="1"><p>Global style overrides</p>
+</td></tr>
+</table>
+<p>To see how the generated site connects docs content to navigation:</p>
+<ul>
+<li>In your code editor, open <code>docusaurus.config.ts</code> and review the <code>docs</code> preset option that points to <code>./sidebars.ts</code>.</li>
+</ul>
+<p>The <code>sidebars.ts</code> file controls which pages appear in the left navigation.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Add your first doc page" duration="4">
+        <p>Create a page in <code>docs/</code>, and then link to it from the intro page.</p>
+<ol type="1">
+<li>In your code editor, create <code>docs/getting-started.md</code>.</li>
+<li>Add the following content to <code>docs/getting-started.md</code>.<pre><code language="language-md" class="language-md">---
+sidebar_position: 2
+---
+
+# Getting started
+
+Welcome to the documentation site you created.
+
+This page is in the `docs/` folder and is rendered automatically by
+Docusaurus.
+</code></pre>
+</li>
+<li>In <code>docs/intro.md</code>, add a link to the new page.<pre><code language="language-md" class="language-md">Read [Getting started](./getting-started).
+</code></pre>
+</li>
+</ol>
+<p>The block between <code>---</code> markers is <em>front matter</em>. In this example, <code>sidebar_position</code> controls the sort order among sibling pages.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Configure the sidebar" duration="3">
+        <p>To show the new page in the left navigation, update the sidebar configuration.</p>
+<ul>
+<li>Open <code>sidebars.ts</code> and make sure that the tutorial sidebar includes <code>getting-started</code>.The file should match the following example:<pre><code language="language-ts" class="language-ts">import type {SidebarsConfig} from &#39;@docusaurus/plugin-content-docs&#39;;
+
+const sidebars: SidebarsConfig = {
+  tutorialSidebar: [
+    &#39;intro&#39;,
+    &#39;getting-started&#39;,
+  ],
+};
+
+export default sidebars;
+</code></pre>
+</li>
+</ul>
+<p>The string entries map to doc IDs that Docusaurus derives from filenames. The <code>getting-started</code> entry maps to <code>docs/getting-started.md</code>.</p>
+<aside class="special"><p> For larger sites, group pages into categories by using <code>type: 'category'</code> entries in the sidebar configuration. For more information, see the <a href="https://docusaurus.io/docs/sidebar" target="_blank">Docusaurus sidebar docs</a>.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Preview locally" duration="2">
+        <p>Start the development server to preview your changes with hot reload.</p>
+<ul>
+<li>At the command prompt, start the development server.<pre>npm start
+</pre>
+</li>
+</ul>
+<p>Docusaurus opens <code>http://localhost:3000</code> in your browser. You should see:</p>
+<ul>
+<li>The site homepage at <code>/</code></li>
+<li>The docs at <code>/docs/intro</code> and <code>/docs/getting-started</code></li>
+<li>The sidebar order from <code>sidebars.ts</code></li>
+</ul>
+<p>To verify hot reload:</p>
+<ul>
+<li>Edit a Markdown file and save your changes. The browser refreshes automatically.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Build for production" duration="3">
+        <p>When you are ready to publish the site, create a production build.</p>
+<ol type="1">
+<li>At the command prompt, create the production build.<pre>npm run build
+</pre>
+Docusaurus writes the output to the <code>build/</code> directory.</li>
+<li>To verify the production build locally, start the local production server.<pre>npm run serve
+</pre>
+</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Deploy to a static host" duration="3">
+        <p>You can deploy the contents of <code>build/</code> to any static host.</p>
+<p>Common static hosts include the following services:</p>
+<ul>
+<li>GitHub Pages</li>
+<li>GitLab Pages</li>
+<li>Netlify</li>
+<li>Vercel</li>
+<li>Cloudflare Pages</li>
+<li>Amazon S3</li>
+<li>An internal web server</li>
+</ul>
+<p>To deploy manually:</p>
+<ul>
+<li>Upload the contents of <code>build/</code> to your static host.</li>
+</ul>
+<p>For GitHub Pages, Docusaurus also provides a deploy script.</p>
+<ol type="1">
+<li>In <code>docusaurus.config.ts</code>, set <code>url</code> and <code>baseUrl</code> to match your hosting target.</li>
+<li>At the command prompt, deploy the site.<pre>npm run deploy
+</pre>
+</li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Next steps" duration="2">
+        <p>You now have a working Docusaurus documentation site. What to do next:</p>
+<ul>
+<li>Add more pages under <code>docs/</code> and expand <code>sidebars.ts</code>.</li>
+<li>Customize branding in <code>docusaurus.config.ts</code> and <code>src/css/custom.css</code>.</li>
+<li>Enable <a href="https://github.com/PaloAltoNetworks/docusaurus-openapi-docs" target="_blank">OpenAPI docs</a> for API reference.</li>
+<li>Set up a CI/CD pipeline so merges to <code>main</code> publish automatically.</li>
+</ul>
+<aside class="special"><p> This portfolio site is itself built with Docusaurus. For more information, see the <a href="/portfolio/docs/docs-as-code/overview" target="_blank">docs-as-code</a> section.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="./claat-public/native-shim.js"></script>
+  <script src="./claat-public/custom-elements.min.js"></script>
+  <script src="./claat-public/prettify.js"></script>
+  <script src="./claat-public/codelab-elements.js"></script>
+  <script src="./claat-public/theme-portfolio.js"></script>
+
+</body>
+</html>
